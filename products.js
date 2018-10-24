@@ -97,7 +97,7 @@ router.post('/add',auth, async(req,res)=>{
 })
 
 
-/* Get Categorized Products */
+/*=================================================* Get Categorized Products *============================================================/
 
 /* Query Products from DB according to a Category */
 
@@ -114,8 +114,10 @@ async function getProducts(res,value) {
      {
          res.send('No Product Available')
      }
-     else
-     res.send(JSON.stringify(results));
+     else{
+    //  res.send(JSON.stringify(results));
+     res.render('categories',{data:results})
+     }
 } 
 
 

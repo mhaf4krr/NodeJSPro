@@ -9,6 +9,9 @@
 
 const express = require('express');
 
+const bodyParser = require('body-parser');
+
+const urlencodedParser = bodyParser.urlencoded({extended:true});
 
 
 
@@ -101,9 +104,12 @@ router.post('/register', async (req,res)=>{
 
 /* Handle User Login   <=================== AUTHENTICATION ===============================> */
 
+
+
 /* login handler takes in a json object with email and password if match returns token */
 
-router.post('/login', async (req,res)=>{
+router.post('/login',urlencodedParser,async (req,res)=>{
+    console.log(req.body)
     let user = await User.findOne({email : req.body.email})
 
     if(user === null)
@@ -139,7 +145,7 @@ router.post('/loginAuth',(req,res)=>{
         try{
             const decodedInfo = jwt.verify(token,'ourSecretPrivateKey')
             console.log(decodedInfo.name + ' has logged-in at '+ new Date())
-            res.status(200).send('Welcome '+ decodedInfo.name)
+            res.status(200).send('Welcome, '+ decodedInfo.name)
         }
         catch(ex) 
         {
